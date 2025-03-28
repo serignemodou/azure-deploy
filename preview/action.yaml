@@ -8,7 +8,7 @@ inputs:
   stack-name: 
     description: 'STACK NAME'
     required: true
-  pulumi-access-token:
+  pulumi-acces-token:
     description: "PULUMI_ACCESS_TOKEN"
     required: true
   az-client-id:
@@ -17,6 +17,9 @@ inputs:
   az-client-secret:
     description: 'AZ_CLIENT_SECRET'
     required: true
+  az-tenant-id: 
+    description: 'AZ_TENANT_ID'
+    required: false
 runs:
   using: composite
   steps:
