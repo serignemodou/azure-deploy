@@ -1,0 +1,40 @@
+name: 'Verify'
+description: 'Pulumi Verify'
+
+inputs:
+  run-dep-check: 
+    description: 'Run yarn run dep-check'
+    required: false
+    default: 'false'
+
+runs:
+  using: composite
+  steps:
+    - name: test
+      shell: bash
+      run: | 
+        echo "github.ref_name ${{ github.ref_name }}"
+        echo "github.ref ${{ github.ref }}"
+    - name: Git checkout
+      uses: actions/checkout@v3
+    - name: Setup node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    - name: Install pulumi CLI
+      uses: pulumi/setup-pulumi@v2
+    - name: Install Dependencies
+      shell: bash
+      run: yarn install
+    - name: Run Lint
+      shell: bash
+      run: yarn run lint
+    - name: Run format
+      shell: bash
+      run: yarn run format-check
+    - name: Run dependencies check
+      if: ${{ inputs.run-dep-check == 'true' }}
+      shell: bash
+      run: yarn run dep-check
+
+

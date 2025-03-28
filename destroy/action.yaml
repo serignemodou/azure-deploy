@@ -1,0 +1,43 @@
+name: 'Destroy'
+description: 'Pulumi Destroy'
+
+inputs:
+  stack-name: 
+    description: 'STACK NAME'
+    required: true
+  pulumi-access-token:
+    description: "PULUMI_ACCESS_TOKEN"
+    required: true
+  az-client-id:
+    description: 'AZ_CLIENT_ID'
+    required: true
+  az-client-secret:
+    description: 'AZ_CLIENT_SECRET'
+    required: true
+runs:
+  using: composite
+  steps:
+    # Install prerequiste 
+    - name: Git checkout
+      uses: actions/checkout@v3
+    - name: Setup node
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    - name: Install pulumi CLI
+      uses: pulumi/setup-pulumi@v2
+    - name: Install Dependencies
+      shell: bash
+      run: yarn install
+    #Pulumi up step
+    - name: Pulumi destroy
+      if: ${{ inputs.stack-name != 'prod' }}
+      uses: pulumi/actions@v3.18.1 #Run pulumi login in same time when using default backend (pulumi cloud) but not for custom backend (S3, Blob ...)
+      with:
+        command: destroy
+        stack-name: beapp/${{ inputs.stack-name }}
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ inputs.pulumi-access-token }}
+        AZ_CLIENT_ID: ${{ inputs.az-client-id }}
+        AZ_CLIENT_SECRET: ${{ inputs.az-client-secret }}
+
