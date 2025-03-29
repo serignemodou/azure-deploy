@@ -11,7 +11,7 @@ on:
 jobs:
     preview:
         name: UP
-        runs-on: ubuntu-latest #[pulumi, azure]
+        runs-on: [self-hosted] #ubuntu-latest #[pulumi, azure]
         environment: ${{ inputs.stack-name }}
         steps:
             - id: extract_service_principal
