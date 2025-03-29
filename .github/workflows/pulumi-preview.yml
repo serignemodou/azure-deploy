@@ -11,7 +11,7 @@ on:
 jobs:
     preview:
         name: Preview
-        runs-on: [pulumi, azure]
+        runs-on: [self-hosted] #[pulumi, azure]
         environment: ${{ inputs.stack-name }}
         steps:
             - id: extract_service_principal
@@ -26,7 +26,7 @@ jobs:
                 stack-name: ${{ inputs.stack-name }}
             - id: Pulumi-preview
               name: pulumi preview
-              uses: azure-deploy/preview@stable
+              uses: azure-deploy/preview
               with:
                 stack-name: ${{ inputs.stack-name }}
                 pulumi-acces-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}

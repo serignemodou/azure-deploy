@@ -26,7 +26,7 @@ jobs:
                 stack-name: ${{ inputs.stack-name }}
             - id: Pulumi-up
               name: pulumi up
-              uses: azure-deploy/up@stable
+              uses: azure-deploy/up
               with:
                 stack-name: ${{ inputs.stack-name }}
                 pulumi-acces-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
