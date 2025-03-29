@@ -16,12 +16,12 @@ jobs:
         steps:
             - id: extract_service_principal
               name: Extract service principal
-              uses: serignemodou/pulumi-azure-params@v1.0.0
+              uses: serignemodou/pulumi-azure-params@v1.0.1
               with:
                 stack-name: ${{ inputs.stack-name }}
             - id: extract_subscription_id
               name: Extract subscription ID
-              uses: serignemodou/pulumi-azure-params@v1.0.0
+              uses: serignemodou/pulumi-azure-params@v1.0.1
               with:
                 stack-name: ${{ inputs.stack-name }}
             - id: Pulumi-up
