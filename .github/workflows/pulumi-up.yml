@@ -1,4 +1,4 @@
-name: Preview
+name: UP
 on:
     workflow_call: 
         inputs:
@@ -10,8 +10,8 @@ on:
 
 jobs:
     preview:
-        name: Preview
-        runs-on: [pulumi, azure]
+        name: UP
+        runs-on: [self-hosted] #[pulumi, azure]
         environment: ${{ inputs.stack-name }}
         steps:
             - id: extract_service_principal
