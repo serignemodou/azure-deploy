@@ -16,17 +16,17 @@ jobs:
         steps:
             - id: extract_service_principal
               name: Extract service principal
-              uses: azure-deploy/extract-sp-subscription-id@main
+              uses: serignemodou/pulumi-azure-params@v1.0.0
               with:
                 stack-name: ${{ inputs.stack-name }}
             - id: extract_subscription_id
               name: Extract subscription ID
-              uses: azure-deploy/extract-sp-subscription-id@main
+              uses: serignemodou/pulumi-azure-params@v1.0.0
               with:
                 stack-name: ${{ inputs.stack-name }}
             - id: Pulumi-preview
               name: pulumi preview
-              uses: azure-deploy/preview
+              uses: serignemodou/PulumiPreview@v1.0.0
               with:
                 stack-name: ${{ inputs.stack-name }}
                 pulumi-acces-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
