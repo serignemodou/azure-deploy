@@ -33,4 +33,5 @@ jobs:
                 az-client-id: ${{ secrets.AZ_CLIENT_ID }}
                 az-client-secret: ${{ secrets.AZ_CLIENT_SECRETS }}
                 az-tenant-id: ${{ secrets.AZ_TENANT_ID }}
+                github-token: ${{ secrets.GITHUB_TOKEN }}
                 

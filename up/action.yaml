@@ -78,7 +78,7 @@ runs:
           pulumi stack export --stack beapp/${{ inputs.stack-name }} > ${{ inputs.stack-name }}.$data.azkv.stack.provider.json
           echo "Step3: Copy yaml with azurekeyvault encryption provider"
           cp -p Pulumi.${{ inputs.stack-name }}.yaml ${{ inputs.stack-name }}.$date.azkv.Pulumi.${{ inputs.stack-name }}.yaml
-           echo "Step5: Set back pulumi encryption provider"
+          echo "Step5: Set back pulumi encryption provider"
           pulumi stack change-secrets-provider default --stack beapp/${{ inputs.stack-name }}
 
     # Push stack backup to azure blob storage

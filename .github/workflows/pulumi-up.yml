@@ -1,0 +1,40 @@
+name: Preview
+on:
+    workflow_call: 
+        inputs:
+            stack-name:
+                description: "Stack Pulumi name"
+                required: false
+                default: ${{ github.base_ref }}
+                type: string
+
+jobs:
+    preview:
+        name: Preview
+        runs-on: [pulumi, azure]
+        environment: ${{ inputs.stack-name }}
+        steps:
+            - id: extract_service_principal
+              name: Extract service principal
+              uses: azure-deploy/extract-sp-subscription-id
+              with:
+                stack-name: ${{ inputs.stack-name }}
+            - id: extract_subscription_id
+              name: Extract subscription ID
+              uses: azure-deploy/extract-sp-subscription-id
+              with:
+                stack-name: ${{ inputs.stack-name }}
+            - id: Pulumi-up
+              name: pulumi up
+              uses: azure-deploy/up@stable
+              with:
+                stack-name: ${{ inputs.stack-name }}
+                pulumi-acces-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+                az-client-id: ${{ secrets[format('{0}_CLIENT_ID', steps.extract_service_principal.outputs.service-principal)] }}
+                az-client-secret: ${{ secrets[format('{0}_CLIENT_SECRET', steps.extract_service_principal.outputs.ervice-principal)] }}
+                az-tenant-id: ${{ secrets.AZ_TENANT_ID }}
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                az-subscription-id: ${{ steps.extract_service_principal.outputs.subscription-id }}
+                stack-backup-encryptionkey: ${{ secrets.STACK_BACKUP_ENCRYPTION_KEY_VAULT }}
+                az-storage-account-name: ${{ secrets.AZ_STORAGE_ACCOUNT_NAME }}
+                az-blob-container-name: ${{ secrets.AZ_BLOB_CONTAINER_NAME }}
