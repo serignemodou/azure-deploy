@@ -29,7 +29,7 @@ jobs:
               uses: serignemodou/PulumiPreview@latest
               with:
                 stack-name: ${{ inputs.stack-name }}
-                pulumi-acces-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+                pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
                 az-client-id: ${{ secrets.AZ_CLIENT_ID }}
                 az-client-secret: ${{ secrets.AZ_CLIENT_SECRETS }}
                 az-tenant-id: ${{ secrets.AZ_TENANT_ID }}
