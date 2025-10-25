@@ -1,18 +1,17 @@
-name: UP
+name: 'Destroy'
 on:
     workflow_call: 
         inputs:
-            stack-name:
-                description: "Stack Pulumi name"
+            stack-name: 
+                description: "Pulimi stack name"
                 required: false
-                default: ${{ github.base_ref }}
+                default: ${{github.base_ref}}
                 type: string
-
 jobs:
-    up:
-        name: UP
+    destroy:
+        name: Destroy
         runs-on: [self-hosted] #ubuntu-latest #[pulumi, azure]
-        environment: ${{ inputs.stack-name }}
+        environment: ${{inputs.stack-name}}
         steps:
             - id: extract_service_principal
               name: Extract service principal
@@ -24,17 +23,10 @@ jobs:
               uses: serignemodou/pulumi-azure-params@latest
               with:
                 stack-name: ${{ inputs.stack-name }}
-            - id: Pulumi-up
-              name: pulumi up
-              uses: serignemodou/PulumiUP@latest
+            - id: Pulumi-Destroy
+              name: pulumi destroy
+              uses: serignemodou/PulumiDestroy@latest
               with:
-                stack-name: ${{ inputs.stack-name }}
                 pulumi-access-token: ${{ secrets.PULUMI_ACCESS_TOKEN }}
                 az-client-id: ${{ secrets[format('{0}_CLIENT_ID', steps.extract_service_principal.outputs.service-principal)] }}
                 az-client-secret: ${{ secrets[format('{0}_CLIENT_SECRET', steps.extract_service_principal.outputs.ervice-principal)] }}
-                az-tenant-id: ${{ secrets.AZ_TENANT_ID }}
-                github-token: ${{ secrets.GITHUB_TOKEN }}
-                az-subscription-id: ${{ steps.extract_service_principal.outputs.subscription-id }}
-                stack-backup-encryptionkey: ${{ secrets.STACK_BACKUP_ENCRYPTION_KEY_VAULT }}
-                az-storage-account-name: ${{ secrets.AZ_STORAGE_ACCOUNT_NAME }}
-                az-blob-container-name: ${{ secrets.AZ_BLOB_CONTAINER_NAME }}
